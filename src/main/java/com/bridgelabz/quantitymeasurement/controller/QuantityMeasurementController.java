@@ -2,7 +2,10 @@ package com.bridgelabz.quantitymeasurement.controller;
 
 import com.bridgelabz.quantitymeasurement.dto.QuantityDTO;
 import com.bridgelabz.quantitymeasurement.service.IQuantityMeasurementService;
+import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/api/measurements")
 public class QuantityMeasurementController {
     
     private final IQuantityMeasurementService service;
@@ -11,23 +14,28 @@ public class QuantityMeasurementController {
         this.service = service;
     }
 
-    public boolean compare(QuantityDTO q1, QuantityDTO q2) {
-        return service.compare(q1, q2);
+    @PostMapping("/compare")
+    public boolean compare(@RequestBody QuantityDTO[] dtos) {
+        return service.compare(dtos[0], dtos[1]);
     }
 
-    public QuantityDTO convert(QuantityDTO q1, String targetUnit) {
+    @PostMapping("/convert/{targetUnit}")
+    public QuantityDTO convert(@RequestBody QuantityDTO q1, @PathVariable String targetUnit) {
         return service.convert(q1, targetUnit);
     }
 
-    public QuantityDTO add(QuantityDTO q1, QuantityDTO q2, String targetUnit) {
-        return service.add(q1, q2, targetUnit);
+    @PostMapping("/add/{targetUnit}")
+    public QuantityDTO add(@RequestBody QuantityDTO[] dtos, @PathVariable String targetUnit) {
+        return service.add(dtos[0], dtos[1], targetUnit);
     }
 
-    public QuantityDTO subtract(QuantityDTO q1, QuantityDTO q2, String targetUnit) {
-        return service.subtract(q1, q2, targetUnit);
+    @PostMapping("/subtract/{targetUnit}")
+    public QuantityDTO subtract(@RequestBody QuantityDTO[] dtos, @PathVariable String targetUnit) {
+        return service.subtract(dtos[0], dtos[1], targetUnit);
     }
 
-    public QuantityDTO divide(QuantityDTO q1, QuantityDTO q2, String targetUnit) {
-        return service.divide(q1, q2, targetUnit);
+    @PostMapping("/divide/{targetUnit}")
+    public QuantityDTO divide(@RequestBody QuantityDTO[] dtos, @PathVariable String targetUnit) {
+        return service.divide(dtos[0], dtos[1], targetUnit);
     }
 }
