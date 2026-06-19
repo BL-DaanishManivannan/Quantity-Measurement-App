@@ -1,10 +1,10 @@
 package com.bridgelabz.quantitymeasurement;
 
-public class QuantityWeight {
+public class Quantity<U extends IMeasurable> {
     private final double value;
-    private final WeightUnit unit;
+    private final U unit;
 
-    public QuantityWeight(double value, WeightUnit unit) {
+    public Quantity(double value, U unit) {
         if (unit == null) {
             throw new IllegalArgumentException("Unit cannot be null");
         }
@@ -16,22 +16,23 @@ public class QuantityWeight {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        QuantityWeight that = (QuantityWeight) obj;
+        Quantity<?> that = (Quantity<?>) obj;
+        if (!this.unit.getClass().equals(that.unit.getClass())) return false;
         double thisValueInBase = this.unit.convertToBaseUnit(this.value);
-        double thatValueInBase = that.unit.convertToBaseUnit(that.value);
+        double thatValueInBase = ((IMeasurable) that.unit).convertToBaseUnit(that.value);
         return Math.abs(thisValueInBase - thatValueInBase) <= 0.01;
     }
 
-    public QuantityWeight convertTo(WeightUnit targetUnit) {
+    public Quantity<U> convertTo(U targetUnit) {
         if (targetUnit == null) {
             throw new IllegalArgumentException("Target unit cannot be null");
         }
         double valueInBase = this.unit.convertToBaseUnit(this.value);
         double convertedValue = targetUnit.convertFromBaseUnit(valueInBase);
-        return new QuantityWeight(Math.round(convertedValue * 100.0) / 100.0, targetUnit);
+        return new Quantity<>(Math.round(convertedValue * 100.0) / 100.0, targetUnit);
     }
 
-    public QuantityWeight add(QuantityWeight other) {
+    public Quantity<U> add(Quantity<U> other) {
         if (other == null) {
             throw new IllegalArgumentException("Cannot add null quantity");
         }
@@ -39,10 +40,10 @@ public class QuantityWeight {
         double otherValueInBase = other.unit.convertToBaseUnit(other.value);
         double sumInBase = thisValueInBase + otherValueInBase;
         double resultValue = this.unit.convertFromBaseUnit(sumInBase);
-        return new QuantityWeight(Math.round(resultValue * 100.0) / 100.0, this.unit);
+        return new Quantity<>(Math.round(resultValue * 100.0) / 100.0, this.unit);
     }
 
-    public QuantityWeight add(QuantityWeight other, WeightUnit targetUnit) {
+    public Quantity<U> add(Quantity<U> other, U targetUnit) {
         if (other == null || targetUnit == null) {
             throw new IllegalArgumentException("Quantity and Target Unit cannot be null");
         }
@@ -50,6 +51,6 @@ public class QuantityWeight {
         double otherValueInBase = other.unit.convertToBaseUnit(other.value);
         double sumInBase = thisValueInBase + otherValueInBase;
         double resultValue = targetUnit.convertFromBaseUnit(sumInBase);
-        return new QuantityWeight(Math.round(resultValue * 100.0) / 100.0, targetUnit);
+        return new Quantity<>(Math.round(resultValue * 100.0) / 100.0, targetUnit);
     }
 }

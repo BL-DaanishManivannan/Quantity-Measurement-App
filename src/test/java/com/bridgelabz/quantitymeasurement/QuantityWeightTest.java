@@ -6,30 +6,30 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QuantityWeightTest {
     @Test
     public void given1KgAnd1000Grams_ShouldReturnEqual() {
-        QuantityWeight kg = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
-        QuantityWeight grams = new QuantityWeight(1000.0, WeightUnit.GRAM);
+        Quantity<WeightUnit> kg = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> grams = new Quantity<>(1000.0, WeightUnit.GRAM);
         assertEquals(kg, grams);
     }
 
     @Test
     public void given1Kg_WhenConvertedToGrams_ShouldReturn1000Grams() {
-        QuantityWeight kg = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
-        QuantityWeight grams = kg.convertTo(WeightUnit.GRAM);
-        assertEquals(new QuantityWeight(1000.0, WeightUnit.GRAM), grams);
+        Quantity<WeightUnit> kg = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> grams = kg.convertTo(WeightUnit.GRAM);
+        assertEquals(new Quantity<>(1000.0, WeightUnit.GRAM), grams);
     }
 
     @Test
     public void given1KgAnd200Grams_WhenAdded_ShouldReturn1200Grams() {
-        QuantityWeight kg = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
-        QuantityWeight grams = new QuantityWeight(200.0, WeightUnit.GRAM);
-        QuantityWeight sum = kg.add(grams, WeightUnit.GRAM);
-        assertEquals(new QuantityWeight(1200.0, WeightUnit.GRAM), sum);
+        Quantity<WeightUnit> kg = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> grams = new Quantity<>(200.0, WeightUnit.GRAM);
+        Quantity<WeightUnit> sum = kg.add(grams, WeightUnit.GRAM);
+        assertEquals(new Quantity<>(1200.0, WeightUnit.GRAM), sum);
     }
 
     @Test
     public void given1Lb_WhenConvertedToKg_ShouldReturnApprox045Kg() {
-        QuantityWeight lb = new QuantityWeight(1.0, WeightUnit.POUND);
-        QuantityWeight kg = lb.convertTo(WeightUnit.KILOGRAM);
-        assertEquals(new QuantityWeight(0.45, WeightUnit.KILOGRAM), kg);
+        Quantity<WeightUnit> lb = new Quantity<>(1.0, WeightUnit.POUND);
+        Quantity<WeightUnit> kg = lb.convertTo(WeightUnit.KILOGRAM);
+        assertEquals(new Quantity<>(0.45, WeightUnit.KILOGRAM), kg);
     }
 }
