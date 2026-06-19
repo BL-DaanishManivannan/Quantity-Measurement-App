@@ -12,6 +12,9 @@ public class Quantity<U extends IMeasurable> {
         this.unit = unit;
     }
 
+    public double getValue() { return value; }
+    public U getUnit() { return unit; }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
