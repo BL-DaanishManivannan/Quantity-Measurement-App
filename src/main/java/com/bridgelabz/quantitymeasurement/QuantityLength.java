@@ -18,4 +18,13 @@ public class QuantityLength {
         double thatValueInBase = that.value * that.unit.getConversionFactor();
         return Math.abs(thisValueInBase - thatValueInBase) <= 0.01;
     }
+
+    public QuantityLength convertTo(LengthUnit targetUnit) {
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+        double valueInBase = this.value * this.unit.getConversionFactor();
+        double convertedValue = valueInBase / targetUnit.getConversionFactor();
+        return new QuantityLength(Math.round(convertedValue * 100.0) / 100.0, targetUnit);
+    }
 }

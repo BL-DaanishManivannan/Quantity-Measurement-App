@@ -131,4 +131,38 @@ public class QuantityLengthTest {
         QuantityLength cm = new QuantityLength(5.0, LengthUnit.CENTIMETERS);
         assertEquals(inches, cm);
     }
+
+    @Test
+    public void given1Feet_WhenConvertedToInches_ShouldReturn12Inches() {
+        QuantityLength feet = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength inches = feet.convertTo(LengthUnit.INCHES);
+        assertEquals(new QuantityLength(12.0, LengthUnit.INCHES), inches);
+    }
+
+    @Test
+    public void given3Feet_WhenConvertedToYards_ShouldReturn1Yard() {
+        QuantityLength feet = new QuantityLength(3.0, LengthUnit.FEET);
+        QuantityLength yards = feet.convertTo(LengthUnit.YARDS);
+        assertEquals(new QuantityLength(1.0, LengthUnit.YARDS), yards);
+    }
+
+    @Test
+    public void given1Yard_WhenConvertedToInches_ShouldReturn36Inches() {
+        QuantityLength yard = new QuantityLength(1.0, LengthUnit.YARDS);
+        QuantityLength inches = yard.convertTo(LengthUnit.INCHES);
+        assertEquals(new QuantityLength(36.0, LengthUnit.INCHES), inches);
+    }
+
+    @Test
+    public void given2Inches_WhenConvertedToCentimeters_ShouldReturn5Cm() {
+        QuantityLength inches = new QuantityLength(2.0, LengthUnit.INCHES);
+        QuantityLength cm = inches.convertTo(LengthUnit.CENTIMETERS);
+        assertEquals(new QuantityLength(5.08, LengthUnit.CENTIMETERS), cm);
+    }
+
+    @Test
+    public void givenNullTargetUnit_WhenConverted_ShouldThrowException() {
+        QuantityLength feet = new QuantityLength(1.0, LengthUnit.FEET);
+        assertThrows(IllegalArgumentException.class, () -> feet.convertTo(null));
+    }
 }
