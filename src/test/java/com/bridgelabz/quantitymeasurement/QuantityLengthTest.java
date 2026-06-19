@@ -89,4 +89,46 @@ public class QuantityLengthTest {
         QuantityLength feet = new QuantityLength(1.0, LengthUnit.FEET);
         assertEquals(inches, feet);
     }
+
+    @Test
+    public void given3FeetAnd1Yard_ShouldReturnEqual() {
+        QuantityLength feet = new QuantityLength(3.0, LengthUnit.FEET);
+        QuantityLength yard = new QuantityLength(1.0, LengthUnit.YARDS);
+        assertEquals(feet, yard);
+    }
+
+    @Test
+    public void given1YardAnd3Feet_ShouldReturnEqual() {
+        QuantityLength yard = new QuantityLength(1.0, LengthUnit.YARDS);
+        QuantityLength feet = new QuantityLength(3.0, LengthUnit.FEET);
+        assertEquals(yard, feet);
+    }
+
+    @Test
+    public void given1YardAnd36Inches_ShouldReturnEqual() {
+        QuantityLength yard = new QuantityLength(1.0, LengthUnit.YARDS);
+        QuantityLength inches = new QuantityLength(36.0, LengthUnit.INCHES);
+        assertEquals(yard, inches);
+    }
+
+    @Test
+    public void given36InchesAnd1Yard_ShouldReturnEqual() {
+        QuantityLength inches = new QuantityLength(36.0, LengthUnit.INCHES);
+        QuantityLength yard = new QuantityLength(1.0, LengthUnit.YARDS);
+        assertEquals(inches, yard);
+    }
+
+    @Test
+    public void given1YardAnd1Yard_ShouldReturnEqual() {
+        QuantityLength yard1 = new QuantityLength(1.0, LengthUnit.YARDS);
+        QuantityLength yard2 = new QuantityLength(1.0, LengthUnit.YARDS);
+        assertEquals(yard1, yard2);
+    }
+
+    @Test
+    public void given2InchesAnd5Cm_ShouldReturnEqual() {
+        QuantityLength inches = new QuantityLength(2.0, LengthUnit.INCHES);
+        QuantityLength cm = new QuantityLength(5.0, LengthUnit.CENTIMETERS);
+        assertEquals(inches, cm);
+    }
 }
