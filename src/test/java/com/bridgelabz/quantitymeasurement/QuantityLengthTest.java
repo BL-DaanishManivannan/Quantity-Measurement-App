@@ -227,4 +227,38 @@ public class QuantityLengthTest {
         Quantity<LengthUnit> cm = new Quantity<>(2.5, LengthUnit.CENTIMETERS);
         assertThrows(IllegalArgumentException.class, () -> inches.add(cm, null));
     }
+
+    @Test
+    public void given2InchesAnd1Inch_WhenSubtracted_ShouldReturn1Inch() {
+        Quantity<LengthUnit> inches2 = new Quantity<>(2.0, LengthUnit.INCHES);
+        Quantity<LengthUnit> inches1 = new Quantity<>(1.0, LengthUnit.INCHES);
+        Quantity<LengthUnit> diff = inches2.subtract(inches1);
+        assertEquals(new Quantity<>(1.0, LengthUnit.INCHES), diff);
+    }
+
+    @Test
+    public void given2InchesAnd2AndHalfCm_WhenSubtracted_ShouldReturn1Inch() {
+        Quantity<LengthUnit> inches = new Quantity<>(2.0, LengthUnit.INCHES);
+        Quantity<LengthUnit> cm = new Quantity<>(2.5, LengthUnit.CENTIMETERS); // roughly 1 inch
+        Quantity<LengthUnit> diff = inches.subtract(cm);
+        assertEquals(new Quantity<>(1.02, LengthUnit.INCHES), diff);
+    }
+
+    @Test
+    public void given2InchesAnd2Inches_WhenDivided_ShouldReturn1() {
+        Quantity<LengthUnit> inches1 = new Quantity<>(2.0, LengthUnit.INCHES);
+        Quantity<LengthUnit> inches2 = new Quantity<>(2.0, LengthUnit.INCHES);
+        Quantity<LengthUnit> quotient = inches1.divide(inches2);
+        // It returns a Quantity object, but we expect its internal value to be 1.0.
+        // Wait, 1.0 inch? Division of 2 inches by 2 inches mathematically yields a dimensionless 1.0.
+        // However, as per UC12, it returns Quantity<U> with the first operand's unit.
+        assertEquals(new Quantity<>(1.0, LengthUnit.INCHES), quotient);
+    }
+
+    @Test
+    public void givenDivisionByZero_ShouldThrowException() {
+        Quantity<LengthUnit> inches = new Quantity<>(2.0, LengthUnit.INCHES);
+        Quantity<LengthUnit> zero = new Quantity<>(0.0, LengthUnit.INCHES);
+        assertThrows(ArithmeticException.class, () -> inches.divide(zero));
+    }
 }
