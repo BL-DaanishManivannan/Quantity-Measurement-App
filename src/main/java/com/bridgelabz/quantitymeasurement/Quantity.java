@@ -36,6 +36,9 @@ public class Quantity<U extends IMeasurable> {
         if (other == null || targetUnit == null) {
             throw new IllegalArgumentException(operation == ArithmeticOperation.DIVIDE ? "Cannot divide by null quantity" : "Quantity and Target Unit cannot be null");
         }
+        if (!this.unit.supportsArithmetic() || !other.unit.supportsArithmetic() || !targetUnit.supportsArithmetic()) {
+            throw new UnsupportedOperationException("Arithmetic operations are not supported for this unit type");
+        }
         double thisValueInBase = this.unit.convertToBaseUnit(this.value);
         double otherValueInBase = other.unit.convertToBaseUnit(other.value);
         double resultInBase = operation.apply(thisValueInBase, otherValueInBase);
