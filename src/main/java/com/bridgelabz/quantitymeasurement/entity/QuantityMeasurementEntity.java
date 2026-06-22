@@ -1,6 +1,12 @@
 package com.bridgelabz.quantitymeasurement.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "quantity_measurement_entity")
 public class QuantityMeasurementEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private double value1;
     private String unit1;

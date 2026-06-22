@@ -4,7 +4,9 @@ import com.bridgelabz.quantitymeasurement.*;
 import com.bridgelabz.quantitymeasurement.dto.QuantityDTO;
 import com.bridgelabz.quantitymeasurement.entity.QuantityMeasurementEntity;
 import com.bridgelabz.quantitymeasurement.repository.IQuantityMeasurementRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService {
     
     private final IQuantityMeasurementRepository repository;
