@@ -14,8 +14,8 @@ public class QuantityLength {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         QuantityLength that = (QuantityLength) obj;
-        double thisValueInBase = this.value * this.unit.getConversionFactor();
-        double thatValueInBase = that.value * that.unit.getConversionFactor();
+        double thisValueInBase = this.unit.convertToBaseUnit(this.value);
+        double thatValueInBase = that.unit.convertToBaseUnit(that.value);
         return Math.abs(thisValueInBase - thatValueInBase) <= 0.01;
     }
 
@@ -23,8 +23,8 @@ public class QuantityLength {
         if (targetUnit == null) {
             throw new IllegalArgumentException("Target unit cannot be null");
         }
-        double valueInBase = this.value * this.unit.getConversionFactor();
-        double convertedValue = valueInBase / targetUnit.getConversionFactor();
+        double valueInBase = this.unit.convertToBaseUnit(this.value);
+        double convertedValue = targetUnit.convertFromBaseUnit(valueInBase);
         return new QuantityLength(Math.round(convertedValue * 100.0) / 100.0, targetUnit);
     }
 
@@ -32,10 +32,10 @@ public class QuantityLength {
         if (other == null) {
             throw new IllegalArgumentException("Cannot add null quantity");
         }
-        double thisValueInBase = this.value * this.unit.getConversionFactor();
-        double otherValueInBase = other.value * other.unit.getConversionFactor();
+        double thisValueInBase = this.unit.convertToBaseUnit(this.value);
+        double otherValueInBase = other.unit.convertToBaseUnit(other.value);
         double sumInBase = thisValueInBase + otherValueInBase;
-        double resultValue = sumInBase / this.unit.getConversionFactor();
+        double resultValue = this.unit.convertFromBaseUnit(sumInBase);
         return new QuantityLength(Math.round(resultValue * 100.0) / 100.0, this.unit);
     }
 
@@ -43,10 +43,10 @@ public class QuantityLength {
         if (other == null || targetUnit == null) {
             throw new IllegalArgumentException("Quantity and Target Unit cannot be null");
         }
-        double thisValueInBase = this.value * this.unit.getConversionFactor();
-        double otherValueInBase = other.value * other.unit.getConversionFactor();
+        double thisValueInBase = this.unit.convertToBaseUnit(this.value);
+        double otherValueInBase = other.unit.convertToBaseUnit(other.value);
         double sumInBase = thisValueInBase + otherValueInBase;
-        double resultValue = sumInBase / targetUnit.getConversionFactor();
+        double resultValue = targetUnit.convertFromBaseUnit(sumInBase);
         return new QuantityLength(Math.round(resultValue * 100.0) / 100.0, targetUnit);
     }
 }
