@@ -204,4 +204,27 @@ public class QuantityLengthTest {
         QuantityLength inches = new QuantityLength(2.0, LengthUnit.INCHES);
         assertThrows(IllegalArgumentException.class, () -> inches.add(null));
     }
+
+    @Test
+    public void given1FootAnd1Foot_WhenAddedWithTargetUnitInches_ShouldReturn24Inches() {
+        QuantityLength feet1 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength feet2 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength sum = feet1.add(feet2, LengthUnit.INCHES);
+        assertEquals(new QuantityLength(24.0, LengthUnit.INCHES), sum);
+    }
+
+    @Test
+    public void given2InchesAnd2AndHalfCm_WhenAddedWithTargetUnitCm_ShouldReturn7AndHalfCm() {
+        QuantityLength inches = new QuantityLength(2.0, LengthUnit.INCHES);
+        QuantityLength cm = new QuantityLength(2.5, LengthUnit.CENTIMETERS);
+        QuantityLength sum = inches.add(cm, LengthUnit.CENTIMETERS);
+        assertEquals(new QuantityLength(7.58, LengthUnit.CENTIMETERS), sum);
+    }
+
+    @Test
+    public void givenNullTargetUnitInAdd_ShouldThrowException() {
+        QuantityLength inches = new QuantityLength(2.0, LengthUnit.INCHES);
+        QuantityLength cm = new QuantityLength(2.5, LengthUnit.CENTIMETERS);
+        assertThrows(IllegalArgumentException.class, () -> inches.add(cm, null));
+    }
 }
