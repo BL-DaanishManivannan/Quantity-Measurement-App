@@ -165,4 +165,43 @@ public class QuantityLengthTest {
         QuantityLength feet = new QuantityLength(1.0, LengthUnit.FEET);
         assertThrows(IllegalArgumentException.class, () -> feet.convertTo(null));
     }
+
+    @Test
+    public void given2InchesAnd2Inches_WhenAdded_ShouldReturn4Inches() {
+        QuantityLength inches1 = new QuantityLength(2.0, LengthUnit.INCHES);
+        QuantityLength inches2 = new QuantityLength(2.0, LengthUnit.INCHES);
+        QuantityLength sum = inches1.add(inches2);
+        assertEquals(new QuantityLength(4.0, LengthUnit.INCHES), sum);
+    }
+
+    @Test
+    public void given1FootAnd2Inches_WhenAdded_ShouldReturn14Inches() {
+        // Wait, if first operand is inches and second is feet
+        QuantityLength inches = new QuantityLength(2.0, LengthUnit.INCHES);
+        QuantityLength feet = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength sum = inches.add(feet);
+        assertEquals(new QuantityLength(14.0, LengthUnit.INCHES), sum);
+    }
+
+    @Test
+    public void given1FootAnd1Foot_WhenAdded_ShouldReturn2Feet() {
+        QuantityLength feet1 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength feet2 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength sum = feet1.add(feet2);
+        assertEquals(new QuantityLength(2.0, LengthUnit.FEET), sum);
+    }
+
+    @Test
+    public void given2InchesAnd2AndHalfCm_WhenAdded_ShouldReturn3Inches() {
+        QuantityLength inches = new QuantityLength(2.0, LengthUnit.INCHES);
+        QuantityLength cm = new QuantityLength(2.5, LengthUnit.CENTIMETERS);
+        QuantityLength sum = inches.add(cm);
+        assertEquals(new QuantityLength(3.0, LengthUnit.INCHES), sum);
+    }
+
+    @Test
+    public void givenNull_WhenAdded_ShouldThrowException() {
+        QuantityLength inches = new QuantityLength(2.0, LengthUnit.INCHES);
+        assertThrows(IllegalArgumentException.class, () -> inches.add(null));
+    }
 }

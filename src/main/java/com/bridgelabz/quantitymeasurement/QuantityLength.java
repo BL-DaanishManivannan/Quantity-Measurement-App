@@ -27,4 +27,15 @@ public class QuantityLength {
         double convertedValue = valueInBase / targetUnit.getConversionFactor();
         return new QuantityLength(Math.round(convertedValue * 100.0) / 100.0, targetUnit);
     }
+
+    public QuantityLength add(QuantityLength other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Cannot add null quantity");
+        }
+        double thisValueInBase = this.value * this.unit.getConversionFactor();
+        double otherValueInBase = other.value * other.unit.getConversionFactor();
+        double sumInBase = thisValueInBase + otherValueInBase;
+        double resultValue = sumInBase / this.unit.getConversionFactor();
+        return new QuantityLength(Math.round(resultValue * 100.0) / 100.0, this.unit);
+    }
 }
